@@ -4,7 +4,8 @@ on:
     branches:
       - main
 jobs:
-  build:
+  eslint:
+    name: eslint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -12,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '~18.8.0'
-      - run: npm install
+      - name: eslint
         uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.github_token }}
