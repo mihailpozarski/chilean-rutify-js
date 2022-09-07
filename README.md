@@ -14,7 +14,7 @@ npm install chilean-rutify
 ```
 
 ## Usage
-You can use the available utility methods by importing the `ChileanRutify` class instance:
+You can use the available utility methods by importing the default object:
 
 ```js
 import ChileanRutify from 'chilean-rutify';
@@ -33,6 +33,36 @@ ChileanRutify.validRutValues(rut)
 // true
 rut = '36408368';
 ChileanRutify.getRutVerifier(rut)
+// "8"
+```
+
+or destructure each individual utility method:
+
+```js
+import {
+  validRutValue,
+  validRutValues,
+  getRutVerifier,
+  validRutVerifier,
+  normalizeRut,
+  formatRut,
+  validRut
+} from "chilean-rutify";
+
+// using an example rut '36.408.368-8'
+let rut = '36408368-8';
+normalizeRut(rut);
+// 364083688
+formatRut(rut);
+// "36.408.368-8"
+validRut(rut);
+// true
+validRutVerifier(rut)
+// true
+validRutValues(rut)
+// true
+rut = '36408368';
+getRutVerifier(rut)
 // "8"
 ```
 
