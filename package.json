@@ -1,0 +1,33 @@
+{
+  "name": "chilean-rutify",
+  "version": "1.0.0",
+  "description": "javascript npm package for validating and formating chilean run/rut",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mihailpozarski/chilean-rutify-js.git"
+  },
+  "keywords": [
+    "chilean",
+    "chile",
+    "rut",
+    "rutify",
+    "validator",
+    "formatter"
+  ],
+  "author": "Mihail Pozarski <mihailpozarski@outlook.com> (https://github.com/mihailpozarski)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mihailpozarski/chilean-rutify-js/issues"
+  },
+  "homepage": "https://github.com/mihailpozarski/chilean-rutify-js#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.0",
+    "@babel/preset-env": "^7.19.0"
+  }
+}
