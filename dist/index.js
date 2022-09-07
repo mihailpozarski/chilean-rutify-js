@@ -1,149 +1,161 @@
 "use strict";
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.validRutVerifier = exports.validRutValues = exports.validRutValue = exports.validRut = exports.translateVerifierResult = exports.stringifyValue = exports.normalizeRut = exports.getRutVerifier = exports.formatRut = exports["default"] = void 0;
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+// validates that value can be used in a rut
+var validRutValue = function validRutValue(value) {
+  value = stringifyValue(value);
+  var validValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "k", "K", ".", "-"];
+  return validValues.includes(value);
+}; //returns a string if posible
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-var ChileanRutify = /*#__PURE__*/function () {
-  function ChileanRutify() {
-    _classCallCheck(this, ChileanRutify);
+exports.validRutValue = validRutValue;
+
+var stringifyValue = function stringifyValue(value) {
+  if (typeof value === "string" || typeof value === "number") {
+    return value.toString();
   }
 
-  _createClass(ChileanRutify, [{
-    key: "validRutValue",
-    value: // validates that value can be used in a rut
-    function validRutValue(value) {
-      value = this.stringifyValue(value);
-      var validValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "k", "K", ".", "-"];
-      return validValues.includes(value);
-    } //returns a string if posible
+  return;
+}; // validates if rut values are valid
 
-  }, {
-    key: "stringifyValue",
-    value: function stringifyValue(value) {
-      if (typeof value === "string" || typeof value === "number") {
-        return value.toString();
-      }
 
-      return;
-    } // validates if rut values are valid
+exports.stringifyValue = stringifyValue;
 
-  }, {
-    key: "validRutValues",
-    value: function validRutValues(rut) {
-      rut = this.stringifyValue(rut);
+var validRutValues = function validRutValues(rut) {
+  rut = stringifyValue(rut);
 
-      for (var i = 0; i < rut.length; i++) {
-        if (!this.validRutValue(rut[i])) {
-          return false;
-        }
-      }
+  if (!rut) {
+    return false;
+  }
 
-      return true;
-    } // returns rut without dots or dashes
-
-  }, {
-    key: "normalizeRut",
-    value: function normalizeRut(rut) {
-      rut = this.stringifyValue(rut);
-
-      if (rut === null || !this.validRutValues(rut)) {
-        return;
-      }
-
-      rut = rut.replace(/[.-]/g, "");
-      return rut.toUpperCase();
-    } // get the rut verifier digit
-
-  }, {
-    key: "getRutVerifier",
-    value: function getRutVerifier(rut) {
-      rut = this.normalizeRut(rut);
-
-      if (rut === null) {
-        return;
-      }
-
-      var sum = 0;
-      var mul = 2;
-
-      for (var i = rut.length - 1; i >= 0; i--) {
-        sum += parseInt(rut[i]) * mul;
-        mul === 7 ? mul = 2 : mul++;
-      }
-
-      var res = sum % 11;
-      return this.translateVerifierResult(res);
-    } // translate rut verifier digit
-
-  }, {
-    key: "translateVerifierResult",
-    value: function translateVerifierResult(result) {
-      if (result === 0) {
-        return "0";
-      }
-
-      if (result === 1) {
-        return "k";
-      }
-
-      return (11 - result).toString();
-    } // validates rut verifier digit
-
-  }, {
-    key: "validRutVerifier",
-    value: function validRutVerifier(rut) {
-      rut = this.normalizeRut(rut);
-
-      if (rut === null) {
-        return;
-      }
-
-      var verifier = rut.slice(-1);
-      var rutValue = rut.slice(0, -1);
-      return verifier === this.getRutVerifier(rutValue);
-    } // validates rut
-
-  }, {
-    key: "validRut",
-    value: function validRut(rut) {
-      rut = this.normalizeRut(rut);
-
-      if (rut === null) {
-        return;
-      }
-
-      return this.validRutValues(rut) && this.validRutVerifier(rut);
-    } // formats rut
-
-  }, {
-    key: "formatRut",
-    value: function formatRut(rut) {
-      rut = this.normalizeRut(rut);
-
-      if (rut === null) {
-        return;
-      }
-
-      var verifier = rut.slice(-1);
-      var rutValue = rut.slice(0, -1);
-      var rutFormated = "";
-
-      for (var i = rutValue.length - 1; i >= 0; i--) {
-        rutFormated = rutValue[i] + rutFormated;
-
-        if ((rutValue.length - i) % 3 === 0 && i !== 0) {
-          rutFormated = "." + rutFormated;
-        }
-      }
-
-      return rutFormated + "-" + verifier;
+  for (var i = 0; i < rut.length; i++) {
+    if (!validRutValue(rut[i])) {
+      return false;
     }
-  }]);
+  }
 
-  return ChileanRutify;
-}();
+  return true;
+}; // returns rut without dots or dashes
 
-module.exports = new ChileanRutify();
+
+exports.validRutValues = validRutValues;
+
+var normalizeRut = function normalizeRut(rut) {
+  rut = stringifyValue(rut);
+
+  if (!rut || !validRutValues(rut)) {
+    return;
+  }
+
+  rut = rut.replace(/[.-]/g, "");
+  return rut.toUpperCase();
+}; // get the rut verifier digit
+
+
+exports.normalizeRut = normalizeRut;
+
+var getRutVerifier = function getRutVerifier(rut) {
+  rut = normalizeRut(rut);
+
+  if (!rut) {
+    return;
+  }
+
+  var sum = 0;
+  var mul = 2;
+
+  for (var i = rut.length - 1; i >= 0; i--) {
+    sum += parseInt(rut[i]) * mul;
+    mul === 7 ? mul = 2 : mul++;
+  }
+
+  var res = sum % 11;
+  return translateVerifierResult(res);
+}; // translate rut verifier digit
+
+
+exports.getRutVerifier = getRutVerifier;
+
+var translateVerifierResult = function translateVerifierResult(result) {
+  if (result === 0) {
+    return "0";
+  }
+
+  if (result === 1) {
+    return "k";
+  }
+
+  return (11 - result).toString();
+}; // validates rut verifier digit
+
+
+exports.translateVerifierResult = translateVerifierResult;
+
+var validRutVerifier = function validRutVerifier(rut) {
+  rut = normalizeRut(rut);
+
+  if (!rut) {
+    return;
+  }
+
+  var verifier = rut.slice(-1);
+  var rutValue = rut.slice(0, -1);
+  return verifier === getRutVerifier(rutValue);
+}; // validates rut
+
+
+exports.validRutVerifier = validRutVerifier;
+
+var validRut = function validRut(rut) {
+  rut = normalizeRut(rut);
+
+  if (!rut) {
+    return;
+  }
+
+  return validRutValues(rut) && validRutVerifier(rut);
+}; // formats rut
+
+
+exports.validRut = validRut;
+
+var formatRut = function formatRut(rut) {
+  rut = normalizeRut(rut);
+
+  if (!rut) {
+    return;
+  }
+
+  var verifier = rut.slice(-1);
+  var rutValue = rut.slice(0, -1);
+  var rutFormated = "";
+
+  for (var i = rutValue.length - 1; i >= 0; i--) {
+    rutFormated = rutValue[i] + rutFormated;
+
+    if ((rutValue.length - i) % 3 === 0 && i !== 0) {
+      rutFormated = "." + rutFormated;
+    }
+  }
+
+  return rutFormated + "-" + verifier;
+};
+
+exports.formatRut = formatRut;
+var _default = {
+  validRutValue: validRutValue,
+  stringifyValue: stringifyValue,
+  validRutValues: validRutValues,
+  normalizeRut: normalizeRut,
+  getRutVerifier: getRutVerifier,
+  translateVerifierResult: translateVerifierResult,
+  validRutVerifier: validRutVerifier,
+  validRut: validRut,
+  formatRut: formatRut
+};
+exports["default"] = _default;
