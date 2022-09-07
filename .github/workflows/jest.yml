@@ -1,0 +1,19 @@
+name: jest
+on:
+  push:
+    branches:
+      - main
+jobs:
+  rspec:
+    name: jest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '~18.8.0'
+      - name: Npm install
+        run: npm install
+      - name: Run jest
+        run: npx jest
