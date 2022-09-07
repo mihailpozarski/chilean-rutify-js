@@ -1,5 +1,7 @@
 # ChileanRutify
 
+[![reviewdog](https://github.com/mihailpozarski/chilean-rutify-js/workflows/reviewdog/badge.svg?branch=main&event=push)](https://github.com/mihailpozarski/chilean-rutify-js/actions?query=workflow%3Areviewdog+event%3Apush+branch%3Amain)
+
 Chilean Rutify is a javascript npm package that makes rut validations and manipulation easy
 
 ## Installation
