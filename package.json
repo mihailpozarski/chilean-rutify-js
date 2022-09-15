@@ -1,6 +1,6 @@
 {
   "name": "chilean-rutify",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "javascript npm package for validating and formating chilean run/rut",
   "main": "index.js",
   "scripts": {
