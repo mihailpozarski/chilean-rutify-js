@@ -54,6 +54,7 @@ test("validRut", () => {
     expect(validRut("12.148.514-1")).toBe(true);
     expect(validRut("23379.716-2")).toBe(true);
     expect(validRut("329382508")).toBe(true);
+    expect(validRut("18531474-k")).toBe(true);
     expect(validRut("36128619-0")).toBe(false);
 });
 

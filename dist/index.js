@@ -87,7 +87,7 @@ var translateVerifierResult = function translateVerifierResult(result) {
   }
 
   if (result === 1) {
-    return "k";
+    return "K";
   }
 
   return (11 - result).toString();
