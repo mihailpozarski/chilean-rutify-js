@@ -1,12 +1,12 @@
 // validates that value can be used in a rut
-export const validRutValue = (value) => {
-  value = stringifyValue(value);
+export const validRutValue = (value: string) => {
+  value = stringifyValue(value) as string;
   const validValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "k", "K", ".", "-"];
   return validValues.includes(value);
 }
 
 //returns a string if posible
-export const stringifyValue = (value) => {
+export const stringifyValue = (value: string |  number) => {
   if (typeof value === "string" || typeof value === "number"){
     return value.toString();
   }
@@ -15,14 +15,14 @@ export const stringifyValue = (value) => {
 }
 
 // validates if rut values are valid
-export const validRutValues = (rut) =>{
-  rut = stringifyValue(rut);
+export const validRutValues = (rut: string) =>{
+  rut = stringifyValue(rut) as string;
   if(!rut){
     return false;
   }
 
-  for (let i = 0; i < rut.length; i++){
-    if (!validRutValue(rut[i])){
+  for (const element of rut){
+    if (!validRutValue(element)){
       return false;
     }
   }
@@ -30,8 +30,8 @@ export const validRutValues = (rut) =>{
 }
 
 // returns rut without dots or dashes
-export const normalizeRut = (rut) => {
-  rut = stringifyValue(rut);
+export const normalizeRut = (rut: string) => {
+  rut = stringifyValue(rut) as string;
   if(!rut || !validRutValues(rut)){
     return;
   }
@@ -41,8 +41,8 @@ export const normalizeRut = (rut) => {
 }
 
 // get the rut verifier digit
-export const getRutVerifier = (rut) => {
-  rut = normalizeRut(rut);
+export const getRutVerifier = (rut: string) => {
+  rut = normalizeRut(rut) as string;
   if(!rut){
     return;
   }
@@ -61,7 +61,7 @@ export const getRutVerifier = (rut) => {
 }
 
 // translate rut verifier digit
-export const translateVerifierResult = (result) => {
+export const translateVerifierResult = (result: number) => {
   if (result === 0){
     return "0";
   }
@@ -74,8 +74,8 @@ export const translateVerifierResult = (result) => {
 }
 
 // validates rut verifier digit
-export const validRutVerifier = (rut) => {
-  rut = normalizeRut(rut);
+export const validRutVerifier = (rut: string) => {
+  rut = normalizeRut(rut) as string;
   if(!rut){
     return;
   }
@@ -87,8 +87,8 @@ export const validRutVerifier = (rut) => {
 }
 
 // validates rut
-export const validRut = (rut) =>{
-  rut = normalizeRut(rut);
+export const validRut = (rut: string) =>{
+  rut = normalizeRut(rut) as string;
   if(!rut){
     return;
   }
@@ -97,8 +97,8 @@ export const validRut = (rut) =>{
 }
 
 // formats rut
-export const formatRut = (rut) => {
-  rut = normalizeRut(rut);
+export const formatRut = (rut: string) => {
+  rut = normalizeRut(rut) as string;
   if(!rut){
     return;
   }

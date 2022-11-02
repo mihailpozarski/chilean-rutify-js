@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "declaration": true,
+    "lib": [
+      "es6"
+  ],
+    "outDir": "dist",
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+  },
+  "typeRoots": [
+    "./dist"
+],
+"types": [
+    "node"
+],
+"forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/__tests__/*"],
+}
