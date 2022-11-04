@@ -1,0 +1,21 @@
+export declare const validRutValue: (value: string) => boolean;
+export declare const stringifyValue: (value: string | number) => string | undefined;
+export declare const validRutValues: (rut: string) => boolean;
+export declare const normalizeRut: (rut: string) => string | undefined;
+export declare const getRutVerifier: (rut: string) => string | undefined;
+export declare const translateVerifierResult: (result: number) => string;
+export declare const validRutVerifier: (rut: string) => boolean | undefined;
+export declare const validRut: (rut: string) => boolean | undefined;
+export declare const formatRut: (rut: string) => string | undefined;
+declare const _default: {
+    validRutValue: (value: string) => boolean;
+    stringifyValue: (value: string | number) => string | undefined;
+    validRutValues: (rut: string) => boolean;
+    normalizeRut: (rut: string) => string | undefined;
+    getRutVerifier: (rut: string) => string | undefined;
+    translateVerifierResult: (result: number) => string;
+    validRutVerifier: (rut: string) => boolean | undefined;
+    validRut: (rut: string) => boolean | undefined;
+    formatRut: (rut: string) => string | undefined;
+};
+export default _default;
