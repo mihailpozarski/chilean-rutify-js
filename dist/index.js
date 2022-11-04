@@ -1,55 +1,64 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.formatRut = exports.validRut = exports.validRutVerifier = exports.translateVerifierResult = exports.getRutVerifier = exports.normalizeRut = exports.validRutValues = exports.stringifyValue = exports.validRutValue = void 0;
 // validates that value can be used in a rut
-export const validRutValue = (value) => {
-    value = stringifyValue(value);
-    const validValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "k", "K", ".", "-"];
+var validRutValue = function (value) {
+    value = (0, exports.stringifyValue)(value);
+    var validValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "k", "K", ".", "-"];
     return validValues.includes(value);
 };
+exports.validRutValue = validRutValue;
 //returns a string if posible
-export const stringifyValue = (value) => {
+var stringifyValue = function (value) {
     if (typeof value === "string" || typeof value === "number") {
         return value.toString();
     }
     return;
 };
+exports.stringifyValue = stringifyValue;
 // validates if rut values are valid
-export const validRutValues = (rut) => {
-    rut = stringifyValue(rut);
+var validRutValues = function (rut) {
+    rut = (0, exports.stringifyValue)(rut);
     if (!rut) {
         return false;
     }
-    for (const element of rut) {
-        if (!validRutValue(element)) {
+    for (var _i = 0, rut_1 = rut; _i < rut_1.length; _i++) {
+        var element = rut_1[_i];
+        if (!(0, exports.validRutValue)(element)) {
             return false;
         }
     }
     return true;
 };
+exports.validRutValues = validRutValues;
 // returns rut without dots or dashes
-export const normalizeRut = (rut) => {
-    rut = stringifyValue(rut);
-    if (!rut || !validRutValues(rut)) {
+var normalizeRut = function (rut) {
+    rut = (0, exports.stringifyValue)(rut);
+    if (!rut || !(0, exports.validRutValues)(rut)) {
         return;
     }
     rut = rut.replace(/[.-]/g, "");
     return rut.toUpperCase();
 };
+exports.normalizeRut = normalizeRut;
 // get the rut verifier digit
-export const getRutVerifier = (rut) => {
-    rut = normalizeRut(rut);
+var getRutVerifier = function (rut) {
+    rut = (0, exports.normalizeRut)(rut);
     if (!rut) {
         return;
     }
-    let sum = 0;
-    let mul = 2;
-    for (let i = rut.length - 1; i >= 0; i--) {
+    var sum = 0;
+    var mul = 2;
+    for (var i = rut.length - 1; i >= 0; i--) {
         sum += parseInt(rut[i]) * mul;
         mul === 7 ? mul = 2 : mul++;
     }
-    const res = sum % 11;
-    return translateVerifierResult(res);
+    var res = sum % 11;
+    return (0, exports.translateVerifierResult)(res);
 };
+exports.getRutVerifier = getRutVerifier;
 // translate rut verifier digit
-export const translateVerifierResult = (result) => {
+var translateVerifierResult = function (result) {
     if (result === 0) {
         return "0";
     }
@@ -58,34 +67,37 @@ export const translateVerifierResult = (result) => {
     }
     return (11 - result).toString();
 };
+exports.translateVerifierResult = translateVerifierResult;
 // validates rut verifier digit
-export const validRutVerifier = (rut) => {
-    rut = normalizeRut(rut);
+var validRutVerifier = function (rut) {
+    rut = (0, exports.normalizeRut)(rut);
     if (!rut) {
         return;
     }
-    const verifier = rut.slice(-1);
-    const rutValue = rut.slice(0, -1);
-    return verifier === getRutVerifier(rutValue);
+    var verifier = rut.slice(-1);
+    var rutValue = rut.slice(0, -1);
+    return verifier === (0, exports.getRutVerifier)(rutValue);
 };
+exports.validRutVerifier = validRutVerifier;
 // validates rut
-export const validRut = (rut) => {
-    rut = normalizeRut(rut);
+var validRut = function (rut) {
+    rut = (0, exports.normalizeRut)(rut);
     if (!rut) {
         return;
     }
-    return validRutValues(rut) && validRutVerifier(rut);
+    return (0, exports.validRutValues)(rut) && (0, exports.validRutVerifier)(rut);
 };
+exports.validRut = validRut;
 // formats rut
-export const formatRut = (rut) => {
-    rut = normalizeRut(rut);
+var formatRut = function (rut) {
+    rut = (0, exports.normalizeRut)(rut);
     if (!rut) {
         return;
     }
-    const verifier = rut.slice(-1);
-    const rutValue = rut.slice(0, -1);
-    let rutFormated = "";
-    for (let i = rutValue.length - 1; i >= 0; i--) {
+    var verifier = rut.slice(-1);
+    var rutValue = rut.slice(0, -1);
+    var rutFormated = "";
+    for (var i = rutValue.length - 1; i >= 0; i--) {
         rutFormated = rutValue[i] + rutFormated;
         if ((rutValue.length - i) % 3 === 0 && i !== 0) {
             rutFormated = "." + rutFormated;
@@ -93,14 +105,15 @@ export const formatRut = (rut) => {
     }
     return rutFormated + "-" + verifier;
 };
-export default {
-    validRutValue,
-    stringifyValue,
-    validRutValues,
-    normalizeRut,
-    getRutVerifier,
-    translateVerifierResult,
-    validRutVerifier,
-    validRut,
-    formatRut
+exports.formatRut = formatRut;
+exports.default = {
+    validRutValue: exports.validRutValue,
+    stringifyValue: exports.stringifyValue,
+    validRutValues: exports.validRutValues,
+    normalizeRut: exports.normalizeRut,
+    getRutVerifier: exports.getRutVerifier,
+    translateVerifierResult: exports.translateVerifierResult,
+    validRutVerifier: exports.validRutVerifier,
+    validRut: exports.validRut,
+    formatRut: exports.formatRut
 };

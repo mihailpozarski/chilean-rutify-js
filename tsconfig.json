@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
+    "module": "CommonJS",
+    "target":"ES5",
     "declaration": true,
     "lib": [
       "es6"
   ],
     "outDir": "dist",
     "strict": true,
-    "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
       "*": ["src/*"]
